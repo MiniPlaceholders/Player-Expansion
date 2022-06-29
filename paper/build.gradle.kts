@@ -10,7 +10,7 @@ dependencies {
 val pluginVersion = version
 
 bukkit {
-    main = "me.dreamerzero.example.paper.PaperPlugin"
+    main = "me.dreamerzero.playerexpansion.paper.PaperPlugin"
     apiVersion = "1.18"
     authors = listOf("4drian3d")
     depend = listOf("MiniPlaceholders")

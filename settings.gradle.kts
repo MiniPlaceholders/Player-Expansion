@@ -1,7 +1,7 @@
-rootProject.name = "example-parent"
+rootProject.name = "playerexpansion-parent"
 
-include("example-paper")
-include("example-velocity")
+include("playerexpansion-paper")
+include("playerexpansion-velocity")
 
-project(":example-velocity").projectDir = file("velocity")
-project(":example-paper").projectDir = file("paper")
+project(":playerexpansion-velocity").projectDir = file("velocity")
+project(":playerexpansion-paper").projectDir = file("paper")
