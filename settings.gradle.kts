@@ -1,7 +1,7 @@
-rootProject.name = "playerexpansion-parent"
+rootProject.name = "Player-Expansion"
 
-include("playerexpansion-paper")
-include("playerexpansion-velocity")
+arrayOf("paper", "velocity").forEach {
+    include("player-expansion-$it")
 
-project(":playerexpansion-velocity").projectDir = file("velocity")
-project(":playerexpansion-paper").projectDir = file("paper")
+    project(":player-expansion-$it").projectDir = file(it)
+}

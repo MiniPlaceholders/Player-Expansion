@@ -1,6 +1,15 @@
-dependencies {
-    compileOnly("com.velocitypowered:velocity-api:3.1.2-SNAPSHOT")
-    annotationProcessor("com.velocitypowered:velocity-api:3.1.2-SNAPSHOT")
+plugins {
+    alias(libs.plugins.blossom)
+    alias(libs.plugins.runvelocity)
 }
 
-java.toolchain.languageVersion.set(JavaLanguageVersion.of(17))
+dependencies {
+    compileOnly(libs.velocity.api)
+    annotationProcessor(libs.velocity.api)
+    compileOnly(libs.miniplaceholders)
+}
+
+blossom {
+    replaceTokenIn("src/main/java/io/github/miniplaceholders/expansion/player/velocity/Constants.java")
+    replaceToken("{version}", project.version)
+}
