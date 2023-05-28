@@ -6,7 +6,6 @@ import net.kyori.adventure.text.minimessage.tag.Tag;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.Locale;
 import java.util.Optional;
 
 @SuppressWarnings("unused")
@@ -39,7 +38,7 @@ public final class PaperPlugin extends JavaPlugin {
                     final String playerClient = player.getClientBrandName();
                     return Tag.preProcessParsed(playerClient != null
                             ? playerClient
-                            : Locale.getDefault().getDisplayName());
+                            : "vanilla");
                 })
                 .audiencePlaceholder("world", (aud, queue, ctx) -> {
                     final Player player = (Player) aud;

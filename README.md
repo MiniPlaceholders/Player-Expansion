@@ -1,42 +1,34 @@
-# Player-Expansion
+# MiniPlaceholders Player Expansion
 Player Expansion for MiniPlaceholders
 
 ## Placeholders
 
-### Velocity
+```
+<player_name>
 
-`<player_name>`
+<player_client>
 
-`<player_client>`
+<player_ping>
 
-`<player_ping>`
+<player_locale>
 
-`<player_locale>`
+<player_tab_header>
 
-`<player_current_server>`
+<player_tab_footer>
+```
 
-`<player_mods>`
+### Exclusive Velocity Placeholders
 
-`<player_tab_header>`
+```
+<player_current_server>
 
-`<player_tab_footer>`
+<player_mods>
+```
 
-### Paper
+### Exclusive Paper Placeholders
 
-`<player_name>`
+```
+<player_world>
 
-`<player_displayname>`
-
-`<player_ping>`
-
-`<player_locale>`
-
-`<player_client>`
-
-`<player_world>`
-
-`<player_team>`
-
-`<player_tab_header>`
-
-`<player_tab_footer>`
+<player_team>
+```
