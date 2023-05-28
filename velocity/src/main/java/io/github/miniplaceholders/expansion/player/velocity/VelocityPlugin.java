@@ -15,8 +15,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Plugin(
-        name = "Player-Expansion",
-        id = "player-expansion",
+        name = "MiniPlaceholders-Player-Expansion",
+        id = "miniplaceholders-player-expansion",
         version = Constants.VERSION,
         authors = {"4drian3d"},
         dependencies = {
@@ -28,35 +28,41 @@ public final class VelocityPlugin {
     public void onProxyInitialize(ProxyInitializeEvent event) {
         Expansion.builder("player")
                 .filter(Player.class)
-                .audiencePlaceholder("name", (aud, queue, ctx) -> Tag.selfClosingInserting(Component.text(((Player) aud).getUsername())))
+                .audiencePlaceholder("name", (aud, queue, ctx) -> {
+                    final Player player = (Player) aud;
+                    return Tag.preProcessParsed(player.getUsername());
+                })
                 .audiencePlaceholder("client", (aud, queue, ctx) -> {
                     Player player = (Player) aud;
                     String playerClient = player.getClientBrand();
-                    return Tag.selfClosingInserting(playerClient != null
-                            ? Component.text(playerClient)
-                            : Component.empty());
+                    return Tag.preProcessParsed(playerClient != null
+                            ? playerClient
+                            : "vanilla");
                 })
-                .audiencePlaceholder("ping", (aud, queue, ctx) -> Tag.selfClosingInserting(Component.text(((Player) aud).getPing())))
+                .audiencePlaceholder("ping", (aud, queue, ctx) -> {
+                    final Player player = (Player) aud;
+                    return Tag.preProcessParsed(Long.toString(player.getPing()));
+                })
                 .audiencePlaceholder("locale", (aud, queue, ctx) -> {
-                    Player player = (Player) aud;
-                    Locale locale = player.getEffectiveLocale();
-                    return Tag.selfClosingInserting(locale != null
-                            ? Component.text(locale.getDisplayName())
-                            : Component.empty());
+                    final Player player = (Player) aud;
+                    final Locale locale = player.getEffectiveLocale();
+                    return Tag.preProcessParsed(locale != null
+                            ? locale.getDisplayName()
+                            : Locale.getDefault().getDisplayName());
                 })
                 .audiencePlaceholder("current_server", (aud, queue, ctx) -> {
-                    Player player = (Player) aud;
-                    String server = player.getCurrentServer().map(sv -> sv.getServerInfo().getName()).orElse("");
-                    return Tag.selfClosingInserting(Component.text(server));
+                    final Player player = (Player) aud;
+                    final String server = player.getCurrentServer().map(sv -> sv.getServerInfo().getName()).orElse("");
+                    return Tag.preProcessParsed(server);
                 })
                 .audiencePlaceholder("mods", (aud, queue, ctx) -> {
-                    Player player = (Player) aud;
-                    String mod = player.getModInfo()
+                    final Player player = (Player) aud;
+                    final String mod = player.getModInfo()
                             .map(info -> info.getMods().stream()
                                     .map(Mod::getId)
                                     .collect(Collectors.joining(", ")))
                             .orElse("");
-                    return Tag.selfClosingInserting(Component.text(mod));
+                    return Tag.preProcessParsed(mod);
                 })
                 .audiencePlaceholder("tab_header", (aud, queue, ctx) -> Tag.selfClosingInserting(Optional
                         .ofNullable(((Player) aud).getPlayerListHeader())

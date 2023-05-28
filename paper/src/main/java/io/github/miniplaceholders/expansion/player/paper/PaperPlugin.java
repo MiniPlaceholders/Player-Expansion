@@ -6,6 +6,7 @@ import net.kyori.adventure.text.minimessage.tag.Tag;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.Locale;
 import java.util.Optional;
 
 @SuppressWarnings("unused")
@@ -17,20 +18,45 @@ public final class PaperPlugin extends JavaPlugin {
 
         Expansion.builder("player")
                 .filter(Player.class)
-                .audiencePlaceholder("name", (aud, queue, ctx) -> Tag.selfClosingInserting(((Player) aud).name()))
-                .audiencePlaceholder("displayname", (aud, queue, ctx) -> Tag.selfClosingInserting(((Player) aud).displayName()))
-                .audiencePlaceholder("ping", (aud, queue, ctx) -> Tag.selfClosingInserting(Component.text(((Player) aud).getPing())))
-                .audiencePlaceholder("locale", (aud, queue, ctx) -> Tag.selfClosingInserting(Component.text(((Player) aud).locale().getDisplayName())))
-                .audiencePlaceholder("client", (aud, queue, ctx) -> {
-                    String playerClient = ((Player) aud).getClientBrandName();
-                    return Tag.selfClosingInserting(playerClient != null
-                            ? Component.text(playerClient)
-                            : Component.empty());
+                .audiencePlaceholder("name", (aud, queue, ctx) -> {
+                    final Player player = (Player) aud;
+                    return Tag.selfClosingInserting(player.name());
                 })
-                .audiencePlaceholder("world", (aud, queue, ctx) -> Tag.selfClosingInserting(Component.text(((Player) aud).getWorld().getName())))
-                .audiencePlaceholder("team", (aud, queue, ctx) -> Tag.selfClosingInserting(((Player) aud).teamDisplayName()))
-                .audiencePlaceholder("tab_header", (aud, queue, ctx) -> Tag.selfClosingInserting(Optional.ofNullable(((Player) aud).playerListHeader()).orElse(Component.empty())))
-                .audiencePlaceholder("tab_footer", (aud, queue, ctx) -> Tag.selfClosingInserting(Optional.ofNullable(((Player) aud).playerListFooter()).orElse(Component.empty())))
+                .audiencePlaceholder("displayname", (aud, queue, ctx) -> {
+                    final Player player = (Player) aud;
+                    return Tag.inserting(player.displayName());
+                })
+                .audiencePlaceholder("ping", (aud, queue, ctx) -> {
+                    final Player player = (Player) aud;
+                    return Tag.preProcessParsed(Integer.toString(player.getPing()));
+                })
+                .audiencePlaceholder("locale", (aud, queue, ctx) -> {
+                    final Player player = (Player) aud;
+                    return Tag.preProcessParsed(player.locale().getDisplayName());
+                })
+                .audiencePlaceholder("client", (aud, queue, ctx) -> {
+                    final Player player = (Player) aud;
+                    final String playerClient = player.getClientBrandName();
+                    return Tag.preProcessParsed(playerClient != null
+                            ? playerClient
+                            : Locale.getDefault().getDisplayName());
+                })
+                .audiencePlaceholder("world", (aud, queue, ctx) -> {
+                    final Player player = (Player) aud;
+                    return Tag.preProcessParsed(player.getWorld().getName());
+                })
+                .audiencePlaceholder("team", (aud, queue, ctx) -> {
+                    final Player player = (Player) aud;
+                    return Tag.selfClosingInserting(player.teamDisplayName());
+                })
+                .audiencePlaceholder("tab_header", (aud, queue, ctx) -> {
+                    final Player player = (Player) aud;
+                    return Tag.selfClosingInserting(Optional.ofNullable(player.playerListHeader()).orElse(Component.empty()));
+                })
+                .audiencePlaceholder("tab_footer", (aud, queue, ctx) -> {
+                    final Player player = (Player) aud;
+                    return Tag.selfClosingInserting(Optional.ofNullable(player.playerListFooter()).orElse(Component.empty()));
+                })
                 .build()
                 .register();
     }

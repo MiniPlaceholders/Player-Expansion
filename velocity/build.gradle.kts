@@ -1,6 +1,5 @@
 plugins {
     alias(libs.plugins.blossom)
-    alias(libs.plugins.runvelocity)
 }
 
 dependencies {

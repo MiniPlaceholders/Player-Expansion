@@ -24,7 +24,7 @@ subprojects {
 
 tasks {
     shadowJar {
-        archiveFileName.set("Player-Expansion-${project.version}.jar")
+        archiveFileName.set("MiniPlaceholders-Player-Expansion-${project.version}.jar")
         duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     }
     build {
