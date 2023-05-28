@@ -6,6 +6,8 @@ Player Expansion for MiniPlaceholders
 ```
 <player_name>
 
+<player_displayname>
+
 <player_client>
 
 <player_ping>

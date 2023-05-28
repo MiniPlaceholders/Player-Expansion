@@ -4,8 +4,8 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":player-expansion-velocity"))
-    implementation(project(":player-expansion-paper"))
+    implementation(projects.playerExpansionPaper)
+    implementation(projects.playerExpansionVelocity)
 }
 
 subprojects {

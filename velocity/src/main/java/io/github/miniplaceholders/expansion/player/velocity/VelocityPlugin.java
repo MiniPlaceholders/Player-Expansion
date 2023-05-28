@@ -7,10 +7,12 @@ import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.util.ModInfo.Mod;
 import io.github.miniplaceholders.api.Expansion;
+import io.github.miniplaceholders.expansion.player.common.DisplayNamePlaceholder;
+import io.github.miniplaceholders.expansion.player.common.LocalePlaceholder;
+import io.github.miniplaceholders.expansion.player.common.NamePlaceholder;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.tag.Tag;
 
-import java.util.Locale;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -28,10 +30,8 @@ public final class VelocityPlugin {
     public void onProxyInitialize(ProxyInitializeEvent event) {
         Expansion.builder("player")
                 .filter(Player.class)
-                .audiencePlaceholder("name", (aud, queue, ctx) -> {
-                    final Player player = (Player) aud;
-                    return Tag.preProcessParsed(player.getUsername());
-                })
+                .audiencePlaceholder("name", new NamePlaceholder())
+                .audiencePlaceholder("displayname", new DisplayNamePlaceholder())
                 .audiencePlaceholder("client", (aud, queue, ctx) -> {
                     Player player = (Player) aud;
                     String playerClient = player.getClientBrand();
@@ -43,13 +43,7 @@ public final class VelocityPlugin {
                     final Player player = (Player) aud;
                     return Tag.preProcessParsed(Long.toString(player.getPing()));
                 })
-                .audiencePlaceholder("locale", (aud, queue, ctx) -> {
-                    final Player player = (Player) aud;
-                    final Locale locale = player.getEffectiveLocale();
-                    return Tag.preProcessParsed(locale != null
-                            ? locale.getDisplayName()
-                            : Locale.getDefault().getDisplayName());
-                })
+                .audiencePlaceholder("locale", new LocalePlaceholder())
                 .audiencePlaceholder("current_server", (aud, queue, ctx) -> {
                     final Player player = (Player) aud;
                     final String server = player.getCurrentServer().map(sv -> sv.getServerInfo().getName()).orElse("");

@@ -6,6 +6,7 @@ dependencies {
     compileOnly(libs.velocity.api)
     annotationProcessor(libs.velocity.api)
     compileOnly(libs.miniplaceholders)
+    implementation(projects.playerExpansionCommon)
 }
 
 blossom {
