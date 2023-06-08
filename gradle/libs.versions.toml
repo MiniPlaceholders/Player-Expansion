@@ -11,7 +11,7 @@ runtask = "2.1.0"
 pluginyml = "0.5.3"
 
 miniplaceholders = "2.2.0"
-adventure = "4.13.1"
+adventure = "4.14.0"
 
 [libraries]
 
