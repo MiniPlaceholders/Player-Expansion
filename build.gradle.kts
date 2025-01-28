@@ -11,7 +11,7 @@ dependencies {
 subprojects {
     apply<JavaPlugin>()
     repositories {
-        maven("https://papermc.io/repo/repository/maven-public/")
+        maven("https://repo.papermc.io/repository/maven-public/")
     }
     java.toolchain.languageVersion.set(JavaLanguageVersion.of(17))
     tasks {

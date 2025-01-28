@@ -6,9 +6,13 @@ import io.github.miniplaceholders.expansion.player.common.LocalePlaceholder;
 import io.github.miniplaceholders.expansion.player.common.NamePlaceholder;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.tag.Tag;
+import org.bukkit.Material;
+import org.bukkit.Statistic;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.Locale;
 import java.util.Optional;
 
 @SuppressWarnings("unused")
@@ -49,6 +53,57 @@ public final class PaperPlugin extends JavaPlugin {
                 .audiencePlaceholder("tab_footer", (aud, queue, ctx) -> {
                     final Player player = (Player) aud;
                     return Tag.selfClosingInserting(Optional.ofNullable(player.playerListFooter()).orElse(Component.empty()));
+                })
+                .audiencePlaceholder("statistic", (aud, queue, ctx) -> {
+                    if (!queue.hasNext()) {
+                        return Tag.preProcessParsed("You need to provide a statistic");
+                    }
+
+                    Statistic statistic;
+                    try {
+                        statistic = Statistic.valueOf(queue.pop().value().toUpperCase(Locale.ROOT));
+                    } catch (IllegalArgumentException e) {
+                        return Tag.preProcessParsed("Unknown statistic");
+                    }
+
+                    final Player player = (Player) aud;
+
+                    switch (statistic.getType()) {
+                        case UNTYPED -> {
+                            return Tag.preProcessParsed(String.valueOf(player.getStatistic(statistic)));
+                        }
+                        case ITEM, BLOCK -> {
+                            if (!queue.hasNext()) {
+                                return Tag.preProcessParsed("You need to provide a material");
+                            }
+
+                            Material material;
+                            try {
+                                material = Material.valueOf(queue.pop().value().toUpperCase(Locale.ROOT));
+                            } catch (IllegalArgumentException e) {
+                                return Tag.preProcessParsed("Unknown material");
+                            }
+
+                            return Tag.preProcessParsed(String.valueOf(player.getStatistic(statistic, material)));
+                        }
+						case ENTITY -> {
+                            if (!queue.hasNext()) {
+                                return Tag.preProcessParsed("You need to provide an entity");
+                            }
+
+                            EntityType entity;
+                            try {
+                                entity = EntityType.valueOf(queue.pop().value().toUpperCase(Locale.ROOT));
+                            } catch (IllegalArgumentException e) {
+                                return Tag.preProcessParsed("Unknown entity");
+                            }
+
+                            return Tag.preProcessParsed(String.valueOf(player.getStatistic(statistic, entity)));
+						}
+						default -> {
+                            return Tag.preProcessParsed("Unknown statistic type");
+                        }
+                    }
                 })
                 .build()
                 .register();

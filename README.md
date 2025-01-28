@@ -33,4 +33,6 @@ Player Expansion for MiniPlaceholders
 <player_world>
 
 <player_team>
+
+<player_statistic:<statistic>:[parameter]>
 ```
