@@ -46,6 +46,6 @@ public final class PaperProvider extends PlatformExpansionProvider<Server> {
                 .audiencePlaceholder(Player.class, "tab_footer", (player, queue, ctx) -> {
                     return Tag.selfClosingInserting(Optional.ofNullable(player.playerListFooter()).orElse(Component.empty()));
                 })
-                .audiencePlaceholder("statistic", new StatisticResolver());
+                .audiencePlaceholder(Player.class, "statistic", new StatisticResolver());
     }
 }

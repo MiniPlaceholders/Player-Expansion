@@ -1,7 +1,6 @@
 package io.github.miniplaceholders.expansion.player.paper.resolver;
 
 import io.github.miniplaceholders.api.resolver.AudienceTagResolver;
-import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.minimessage.Context;
 import net.kyori.adventure.text.minimessage.tag.Tag;
 import net.kyori.adventure.text.minimessage.tag.resolver.ArgumentQueue;
@@ -13,9 +12,9 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Locale;
 
-public final class StatisticResolver implements AudienceTagResolver<@NotNull Audience> {
+public final class StatisticResolver implements AudienceTagResolver<@NotNull Player> {
     @Override
-    public @NotNull Tag tag(@NotNull Audience audience, @NotNull ArgumentQueue queue, @NotNull Context ctx) {
+    public @NotNull Tag tag(@NotNull Player player, @NotNull ArgumentQueue queue, @NotNull Context ctx) {
         if (!queue.hasNext()) {
             return Tag.preProcessParsed("You need to provide a statistic");
         }
@@ -26,8 +25,6 @@ public final class StatisticResolver implements AudienceTagResolver<@NotNull Aud
         } catch (IllegalArgumentException e) {
             return Tag.preProcessParsed("Unknown statistic");
         }
-
-        final Player player = (Player) audience;
 
         switch (statistic.getType()) {
             case UNTYPED -> {
