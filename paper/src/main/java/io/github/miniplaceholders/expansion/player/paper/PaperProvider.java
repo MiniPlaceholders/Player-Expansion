@@ -5,6 +5,7 @@ import io.github.miniplaceholders.expansion.player.common.PlatformExpansionProvi
 import io.github.miniplaceholders.expansion.player.common.resolver.DisplayNameResolver;
 import io.github.miniplaceholders.expansion.player.common.resolver.LocaleResolver;
 import io.github.miniplaceholders.expansion.player.common.resolver.NameResolver;
+import io.github.miniplaceholders.expansion.player.paper.resolver.StatisticResolver;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.tag.Tag;
 import org.bukkit.Material;
@@ -49,56 +50,6 @@ public final class PaperProvider extends PlatformExpansionProvider<Server> {
                 .audiencePlaceholder(Player.class, "tab_footer", (player, queue, ctx) -> {
                     return Tag.selfClosingInserting(Optional.ofNullable(player.playerListFooter()).orElse(Component.empty()));
                 })
-                .audiencePlaceholder("statistic", (aud, queue, ctx) -> {
-                    if (!queue.hasNext()) {
-                        return Tag.preProcessParsed("You need to provide a statistic");
-                    }
-
-                    Statistic statistic;
-                    try {
-                        statistic = Statistic.valueOf(queue.pop().value().toUpperCase(Locale.ROOT));
-                    } catch (IllegalArgumentException e) {
-                        return Tag.preProcessParsed("Unknown statistic");
-                    }
-
-                    final Player player = (Player) aud;
-
-                    switch (statistic.getType()) {
-                        case UNTYPED -> {
-                            return Tag.preProcessParsed(String.valueOf(player.getStatistic(statistic)));
-                        }
-                        case ITEM, BLOCK -> {
-                            if (!queue.hasNext()) {
-                                return Tag.preProcessParsed("You need to provide a material");
-                            }
-
-                            Material material;
-                            try {
-                                material = Material.valueOf(queue.pop().value().toUpperCase(Locale.ROOT));
-                            } catch (IllegalArgumentException e) {
-                                return Tag.preProcessParsed("Unknown material");
-                            }
-
-                            return Tag.preProcessParsed(String.valueOf(player.getStatistic(statistic, material)));
-                        }
-                        case ENTITY -> {
-                            if (!queue.hasNext()) {
-                                return Tag.preProcessParsed("You need to provide an entity");
-                            }
-
-                            EntityType entity;
-                            try {
-                                entity = EntityType.valueOf(queue.pop().value().toUpperCase(Locale.ROOT));
-                            } catch (IllegalArgumentException e) {
-                                return Tag.preProcessParsed("Unknown entity");
-                            }
-
-                            return Tag.preProcessParsed(String.valueOf(player.getStatistic(statistic, entity)));
-                        }
-                        default -> {
-                            return Tag.preProcessParsed("Unknown statistic type");
-                        }
-                    }
-                });
+                .audiencePlaceholder("statistic", new StatisticResolver());
     }
 }
