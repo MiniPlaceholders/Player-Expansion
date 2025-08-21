@@ -5,6 +5,7 @@ import io.github.miniplaceholders.expansion.player.common.PlatformExpansionProvi
 import io.github.miniplaceholders.expansion.player.common.resolver.DisplayNameResolver;
 import io.github.miniplaceholders.expansion.player.common.resolver.LocaleResolver;
 import io.github.miniplaceholders.expansion.player.common.resolver.NameResolver;
+import io.github.miniplaceholders.expansion.player.paper.resolver.StatisticResolver;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.tag.Tag;
 import org.bukkit.Server;
@@ -44,6 +45,7 @@ public final class PaperProvider extends PlatformExpansionProvider<Server> {
                 })
                 .audiencePlaceholder(Player.class, "tab_footer", (player, queue, ctx) -> {
                     return Tag.selfClosingInserting(Optional.ofNullable(player.playerListFooter()).orElse(Component.empty()));
-                });
+                })
+                .audiencePlaceholder(Player.class, "statistic", new StatisticResolver());
     }
 }
