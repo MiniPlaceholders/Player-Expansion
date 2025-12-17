@@ -4,7 +4,7 @@ metadata.format.version = "1.1"
 
 velocity = "3.4.0-SNAPSHOT"
 paper = "1.21.10-R0.1-SNAPSHOT"
-sponge = "14.0.0"
+sponge = "16.0.0"
 
 blossom = "2.2.0"
 shadow = "9.3.0"
