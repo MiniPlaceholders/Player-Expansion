@@ -7,7 +7,7 @@ paper = "1.21.10-R0.1-SNAPSHOT"
 sponge = "16.0.0"
 
 blossom = "2.2.0"
-shadow = "9.3.0"
+shadow = "9.3.1"
 runtask = "3.0.2"
 
 miniplaceholders = "3.1.0"
