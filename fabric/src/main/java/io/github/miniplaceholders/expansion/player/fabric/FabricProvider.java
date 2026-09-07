@@ -5,13 +5,8 @@ import io.github.miniplaceholders.expansion.player.common.PlatformExpansionProvi
 import io.github.miniplaceholders.expansion.player.common.resolver.DisplayNameResolver;
 import io.github.miniplaceholders.expansion.player.common.resolver.LocaleResolver;
 import io.github.miniplaceholders.expansion.player.common.resolver.NameResolver;
-import net.minecraft.server.MinecraftServer;
 
-public class FabricProvider extends PlatformExpansionProvider<MinecraftServer> {
-    public FabricProvider(Object platformInstance) {
-        super((MinecraftServer) platformInstance);
-    }
-
+public final class FabricProvider implements PlatformExpansionProvider {
     @Override
     public Expansion.Builder provideBuilder() {
         return Expansion.builder("player")

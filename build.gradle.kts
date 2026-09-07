@@ -16,21 +16,21 @@ dependencies {
     implementation(projects.playerExpansionCommon)
 }
 
-java.toolchain.languageVersion.set(JavaLanguageVersion.of(21))
+java.toolchain.languageVersion.set(JavaLanguageVersion.of(25))
 tasks {
     compileJava {
         options.encoding = Charsets.UTF_8.name()
-        options.release.set(21)
+        options.release.set(25)
     }
 }
 
 subprojects {
     apply<JavaPlugin>()
-    java.toolchain.languageVersion.set(JavaLanguageVersion.of(21))
+    java.toolchain.languageVersion.set(JavaLanguageVersion.of(25))
     tasks {
         compileJava {
             options.encoding = Charsets.UTF_8.name()
-            options.release.set(21)
+            options.release.set(25)
         }
     }
 }

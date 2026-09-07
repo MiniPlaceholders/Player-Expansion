@@ -6,21 +6,16 @@ import io.github.miniplaceholders.expansion.player.common.resolver.DisplayNameRe
 import io.github.miniplaceholders.expansion.player.common.resolver.LocaleResolver;
 import io.github.miniplaceholders.expansion.player.common.resolver.NameResolver;
 import net.kyori.adventure.text.minimessage.tag.Tag;
-import org.spongepowered.api.Server;
 import org.spongepowered.api.entity.living.player.server.ServerPlayer;
 
-public class SpongeProvider extends PlatformExpansionProvider<Server> {
-    public SpongeProvider(Object platformInstance) {
-        super((Server) platformInstance);
-    }
-
+public final class SpongeProvider implements PlatformExpansionProvider {
     @Override
     public Expansion.Builder provideBuilder() {
         return Expansion.builder("player")
                 .audiencePlaceholder("name", new NameResolver())
                 .audiencePlaceholder("displayname", new DisplayNameResolver())
                 .audiencePlaceholder("locale", new LocaleResolver())
-                .audiencePlaceholder(ServerPlayer.class, "world", (player, queue, ctx) -> {
+                .audiencePlaceholder(ServerPlayer.class, "world", (player, _, _) -> {
                     return Tag.preProcessParsed(player.world().key().formatted());
                 });
     }

@@ -1,7 +1,6 @@
 package io.github.miniplaceholders.expansion.player.velocity;
 
 import com.velocitypowered.api.proxy.Player;
-import com.velocitypowered.api.proxy.ProxyServer;
 import com.velocitypowered.api.util.ModInfo.Mod;
 import io.github.miniplaceholders.api.Expansion;
 import io.github.miniplaceholders.expansion.player.common.PlatformExpansionProvider;
@@ -14,32 +13,28 @@ import net.kyori.adventure.text.minimessage.tag.Tag;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public final class VelocityProvider extends PlatformExpansionProvider<ProxyServer> {
-
-    public VelocityProvider(Object platformInstance) {
-        super((ProxyServer) platformInstance);
-    }
+public final class VelocityProvider implements PlatformExpansionProvider {
 
     @Override
     public Expansion.Builder provideBuilder() {
         return Expansion.builder("player")
                 .audiencePlaceholder("name", new NameResolver())
                 .audiencePlaceholder("displayname", new DisplayNameResolver())
-                .audiencePlaceholder(Player.class, "client", (player, queue, ctx) -> {
+                .audiencePlaceholder(Player.class, "client", (player, _, _) -> {
                     String playerClient = player.getClientBrand();
                     return Tag.preProcessParsed(playerClient != null
                             ? playerClient
                             : "vanilla");
                 })
-                .audiencePlaceholder(Player.class, "ping", (player, queue, ctx) -> {
+                .audiencePlaceholder(Player.class, "ping", (player, _, _) -> {
                     return Tag.preProcessParsed(Long.toString(player.getPing()));
                 })
                 .audiencePlaceholder("locale", new LocaleResolver())
-                .audiencePlaceholder(Player.class, "current_server", (player, queue, ctx) -> {
+                .audiencePlaceholder(Player.class, "current_server", (player, _, _) -> {
                     final String server = player.getCurrentServer().map(sv -> sv.getServerInfo().getName()).orElse("");
                     return Tag.preProcessParsed(server);
                 })
-                .audiencePlaceholder(Player.class, "mods", (player, queue, ctx) -> {
+                .audiencePlaceholder(Player.class, "mods", (player, _, _) -> {
                     final String mod = player.getModInfo()
                             .map(info -> info.getMods().stream()
                                     .map(Mod::getId)
@@ -48,11 +43,11 @@ public final class VelocityProvider extends PlatformExpansionProvider<ProxyServe
                     return Tag.preProcessParsed(mod);
                 })
                 .audiencePlaceholder(Player.class, "tab_header",
-                        (aud, queue, ctx) -> Tag.selfClosingInserting(Optional
+                        (aud, _, _) -> Tag.selfClosingInserting(Optional
                                 .ofNullable(aud.getPlayerListHeader())
                                 .orElse(Component.empty())))
                 .audiencePlaceholder(Player.class, "tab_footer",
-                        (aud, queue, ctx) -> Tag.selfClosingInserting(Optional
+                        (aud, _, _) -> Tag.selfClosingInserting(Optional
                                 .ofNullable(aud.getPlayerListFooter())
                                 .orElse(Component.empty())));
     }

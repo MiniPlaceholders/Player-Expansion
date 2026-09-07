@@ -2,12 +2,7 @@ package io.github.miniplaceholders.expansion.player.common;
 
 import io.github.miniplaceholders.api.Expansion;
 
-public abstract class PlatformExpansionProvider<T> {
-    protected T platformInstance;
+public interface PlatformExpansionProvider {
 
-    protected PlatformExpansionProvider(T platformInstance) {
-        this.platformInstance = platformInstance;
-    }
-
-    public abstract Expansion.Builder provideBuilder();
+    Expansion.Builder provideBuilder();
 }

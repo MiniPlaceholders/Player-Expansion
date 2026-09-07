@@ -1,13 +1,12 @@
 plugins {
-    id("fabric-loom")
+    id("net.fabricmc.fabric-loom")
 }
 
 dependencies {
     compileOnly(libs.miniplaceholders)
     compileOnly(projects.playerExpansionCommon)
     minecraft(libs.minecraft)
-    mappings(loom.officialMojangMappings())
-    modCompileOnly(libs.fabric.loader)
-    modCompileOnly(libs.fabric.api)
-    modCompileOnly(libs.adventure.platform.fabric)
+    compileOnly(libs.fabric.loader)
+    compileOnly(libs.fabric.api)
+    compileOnly(libs.adventure.platform.fabric)
 }
