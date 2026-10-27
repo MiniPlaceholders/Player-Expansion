@@ -2,7 +2,7 @@ metadata.format.version = "1.1"
 
 [versions]
 
-velocity = "4.3.0"
+velocity = "4.3.1"
 paper = "26.3.build.209-stable"
 sponge = "16.0.0"
 
